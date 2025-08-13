@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="system">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VectorLabs — B2B IT Consulting</title>
+  <meta name="description" content="Cloud, security, and automation that actually ships. VectorLabs helps teams deliver reliable outcomes fast." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* -------------------------------
+       Design System (Light / Dark)
+    --------------------------------*/
+    :root {
+      /* Light */
+      --bg: #f6f7fb;
+      --bg-elev: #ffffff;
+      --text: #0b1220;
+      --muted: #64708b;
+      --line: #e6e8ef;
+      --brand: #6e9bff;
+      --brand-2: #7b2cff;
+      --accent: #00d0ff;
+      --ring: rgba(110, 155, 255, .4);
+      --shadow: 0 6px 30px rgba(17, 24, 39, .08);
+      --radius: 14px;
+      --max: 1200px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0f14;
+        --bg-elev: #111826;
+        --text: #e8eef6;
+        --muted: #9aa4b2;
+        --line: #1e2532;
+        --brand: #4cc9f0;
+        --brand-2: #7b2cff;
+        --accent: #22d3ee;
+        --ring: rgba(124, 58, 237, .35);
+        --shadow: 0 10px 30px rgba(0,0,0,.35);
+      }
+    }
+
+    /* Manual theme override */
+    html[data-theme="light"] {
+      --bg: #f6f7fb; --bg-elev:#ffffff; --text:#0b1220; --muted:#64708b; --line:#e6e8ef;
+      --brand:#6e9bff; --brand-2:#7b2cff; --accent:#00d0ff; --ring:rgba(110,155,255,.4);
+      --shadow:0 6px 30px rgba(17,24,39,.08);
+    }
+    html[data-theme="dark"] {
+      --bg:#0b0f14; --bg-elev:#111826; --text:#e8eef6; --muted:#9aa4b2; --line:#1e2532;
+      --brand:#4cc9f0; --brand-2:#7b2cff; --accent:#22d3ee; --ring:rgba(124,58,237,.35);
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+
+    /* Base */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--text); background:
+        radial-gradient(1200px 800px at 80% -100px, color-mix(in oklab, var(--brand-2) 25%, transparent), transparent 60%),
+        radial-gradient(900px 700px at 0% -50px, color-mix(in oklab, var(--accent) 20%, transparent), transparent 55%),
+        var(--bg);
+      line-height:1.55;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:var(--max);margin:0 auto;padding:0 20px}
+    .shadow{box-shadow:var(--shadow)}
+    .card{background:var(--bg-elev); border:1px solid var(--line); border-radius:var(--radius); padding:18px}
+    .muted{color:var(--muted)}
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0}
+
+    /* Focus styles */
+    :focus-visible{outline:none; box-shadow:0 0 0 4px var(--ring)}
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: saturate(180%) blur(10px);
+      background: color-mix(in oklab, var(--bg), transparent 20%);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+    .brand{display:flex;gap:12px;align-items:center;font-weight:800;letter-spacing:.2px}
+    .logo{width:34px;height:34px;border-radius:9px;
+      background: conic-gradient(from 210deg, var(--brand), var(--brand-2));}
+    .nav-links{display:flex;gap:24px;align-items:center}
+    .nav-links a{color:var(--muted);font-weight:600}
+    .nav-links a[aria-current="page"], .nav-links a:hover{color:var(--text)}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px; justify-content:center;
+      border:0;border-radius:12px;padding:12px 18px;font-weight:700; cursor:pointer;
+      transition:transform .12s ease, filter .2s ease, box-shadow .2s ease;
+      background:linear-gradient(90deg, var(--brand-2), var(--brand)); color:#fff;
+      box-shadow:0 8px 20px color-mix(in oklab, var(--brand) 25%, transparent);
+    }
+    .btn:hover{transform:translateY(-1px); filter:saturate(110%)}
+    .btn.ghost{background:transparent; color:var(--text); border:1px solid var(--line); box-shadow:none}
+    .btn.ghost:hover{background:color-mix(in oklab, var(--brand) 12%, transparent)}
+    .menu-btn{display:none;border:1px solid var(--line);border-radius:10px;padding:10px;background:transparent}
+    .theme-toggle{border:1px solid var(--line); background:transparent; border-radius:10px; padding:10px}
+
+    /* Hero */
+    .hero{padding:96px 0 54px}
+    .hero-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:38px;align-items:center}
+    h1{font-size:clamp(34px, 3.2vw + 12px, 56px);line-height:1.05;margin:0 0 14px;font-weight:800;letter-spacing:-.02em}
+    .lead{color:var(--muted);font-size:18px;max-width:60ch;margin:0 0 24px}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;
+      background:color-mix(in oklab, var(--brand-2) 15%, transparent);
+      border:1px solid color-mix(in oklab, var(--brand-2) 35%, transparent);
+      color:color-mix(in oklab, var(--brand-2) 80%, #fff); font-weight:700; margin-bottom:12px;
+      font-size:12px; letter-spacing:.08em; text-transform:uppercase}
+    .hero-visual{border:1px solid var(--line); border-radius:18px; height:420px;
+      position:relative; overflow:hidden; background:var(--bg-elev)}
+    .mesh{position:absolute; inset:-20%; background:
+      radial-gradient(120px 80px at 20% 30%, color-mix(in oklab, var(--brand-2) 35%, transparent), transparent 60%),
+      radial-gradient(160px 100px at 80% 70%, color-mix(in oklab, var(--accent) 35%, transparent), transparent 60%);
+      filter: blur(44px); opacity:.6; animation: drift 16s ease-in-out infinite alternate;}
+    @keyframes drift{to{transform:translateY(-16px) translateX(10px)}}
+    .screen{width:84%; height:72%; border-radius:14px; background:color-mix(in oklab, var(--bg) 92%, #0b1220);
+      border:1px solid var(--line); box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--line) 30%, transparent);
+      display:grid; grid-template-rows:auto 1fr; overflow:hidden; margin:0 auto}
+    .titlebar{display:flex;gap:8px;align-items:center;padding:10px;border-bottom:1px solid var(--line)}
+    .dot{width:10px;height:10px;border-radius:50%;background:#f87171}
+    .dot:nth-child(2){background:#fbbf24}.dot:nth-child(3){background:#34d399}
+    .code{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color:#c7d2fe;
+      font-size:13px; padding:14px; overflow:auto; line-height:1.6; white-space:pre-wrap}
+
+    /* Sections */
+    .section{padding:64px 0}
+    .section h2{font-size:clamp(24px, 2.2vw + 10px, 36px); margin:0 0 6px; letter-spacing:-.01em}
+    .section .sub{margin:0 0 18px; color:var(--muted)}
+    .grid{display:grid; gap:18px; grid-template-columns: repeat(12, 1fr)}
+    .service{grid-column: span 4}
+    .service .icon{width:40px;height:40px;border-radius:10px; display:grid;place-items:center;
+      background:color-mix(in oklab, var(--brand-2) 18%, transparent);
+      border:1px solid color-mix(in oklab, var(--brand-2) 35%, transparent)}
+    .service:hover{transform:translateY(-2px); transition:transform .15s ease}
+
+    /* Logos */
+    .logos{display:grid; grid-template-columns: repeat(6,1fr); gap:16px; align-items:center}
+    .logo-tile{background:color-mix(in oklab, var(--bg-elev) 85%, transparent); border:1px solid var(--line);
+      border-radius:12px; height:64px; display:grid; place-items:center; color:var(--muted);
+      font-weight:700; letter-spacing:.06em; text-transform:uppercase; font-size:12px}
+
+    /* Testimonial Slider */
+    .slider{position:relative; overflow:hidden}
+    .slides{display:flex; transition: transform .5s ease}
+    .slide{min-width:100%}
+    .quote{font-size:18px}
+    .dots{display:flex; gap:8px; justify-content:center; margin-top:12px}
+    .dot-btn{width:10px;height:10px;border-radius:50%;border:1px solid var(--line); background:transparent}
+    .dot-btn[aria-current="true"]{background:var(--brand); border-color:transparent}
+
+    /* CTA */
+    .cta{display:grid; grid-template-columns: 1.2fr 1fr; gap:24px; align-items:center;
+      background:linear-gradient(90deg, color-mix(in oklab, var(--brand-2) 16%, transparent), color-mix(in oklab, var(--brand) 16%, transparent));
+      border:1px solid var(--line); border-radius:18px; padding:24px}
+
+    /* FAQ */
+    details{border:1px solid var(--line); border-radius:12px; padding:14px 16px; background:var(--bg-elev)}
+    details + details{margin-top:10px}
+    summary{cursor:pointer; font-weight:600}
+    summary::-webkit-details-marker{display:none}
+
+    /* Footer + Sticky CTA */
+    footer{border-top:1px solid var(--line); color:var(--muted); padding:26px 0 46px}
+    .foot{display:flex;gap:16px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+    .small{font-size:13px}
+    .fab{
+      position: fixed; right:16px; bottom:16px; z-index:60;
+      display:none;
+    }
+    @media (max-width: 1000px){
+      .hero-grid{grid-template-columns:1fr}
+      .cta{grid-template-columns:1fr}
+      .service{grid-column: span 6}
+      .logos{grid-template-columns: repeat(3,1fr)}
+      .fab{display:inline-flex}
+    }
+    @media (max-width: 640px){
+      .nav-links{display:none}
+      .menu-btn{display:inline-flex}
+      .service{grid-column: span 12}
+      .logos{grid-template-columns: repeat(2,1fr)}
+    }
+
+    /* Motion safety */
+    @media (prefers-reduced-motion: reduce){
+      .mesh{animation: none}
+      .slides{transition:none}
+      .btn, .service{transition:none}
+      html{scroll-behavior:auto}
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip to content -->
+  <a class="sr-only" href="#main">Skip to content</a>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <span>VectorLabs</span>
+      </div>
+      <nav class="nav-links" aria-label="Main">
+        <a href="#services">Services</a>
+        <a href="#approach">Approach</a>
+        <a href="#clients">Clients</a>
+        <a href="#faq">FAQ</a>
+        <button class="btn ghost theme-toggle" id="themeBtn" aria-pressed="false" title="Toggle theme">🌓</button>
+        <a class="btn" href="#contact">Book a Call</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="drawer" aria-label="Open menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="drawer" hidden style="position:fixed;inset:72px 0 auto 0;background:color-mix(in oklab, var(--bg) 95%, transparent);border-top:1px solid var(--line);backdrop-filter:blur(8px);z-index:40;">
+    <div class="container" style="display:grid;gap:12px;padding:14px 0 18px">
+      <a href="#services">Services</a>
+      <a href="#approach">Approach</a>
+      <a href="#clients">Clients</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn" href="#contact" style="width:max-content">Book a Call</a>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <main id="main" class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="pill">Outcome-driven consulting</div>
+        <h1>Enterprise IT consulting that puts reliability first</h1>
+        <p class="lead">
+          Cloud, security, and automation—designed for uptime and delivered without the buzzword tax.
+          Clear deliverables. Short feedback loops. Measurable wins.
+        </p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a class="btn" href="#contact" aria-describedby="cta-help">Get a solution demo →</a>
+          <a class="btn ghost" href="#services">See our services</a>
+        </div>
+        <p id="cta-help" class="muted" style="margin-top:8px">No spam. We reply within one business day.</p>
+
+        <div class="card shadow" style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap">
+          <span class="muted">← What teams achieve:</span>
+          <span>↑ Faster deployments</span> ·
+          <span>↓ Cloud spend</span> ·
+          <span>✔️ Audit readiness</span>
+        </div>
+      </div>
+
+      <div class="hero-visual shadow" aria-hidden="true">
+        <div class="mesh"></div>
+        <div class="screen">
+          <div class="titlebar">
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            <div style="margin-left:10px;color:var(--muted);font-weight:600;">deploy.yaml</div>
+          </div>
+<pre class="code"><code># infra as code (no drama)
+apiVersion: v1
+kind: Service
+metadata:
+  name: b2b-api
+spec:
+  ports:
+    - port: 443
+      targetPort: 8443
+  selector:
+    app: b2b-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: b2b-api
+spec:
+  replicas: 3
+  strategy: { type: RollingUpdate }
+</code></pre>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Services -->
+  <section class="section" id="services" aria-labelledby="services-title">
+    <div class="container">
+      <h2 id="services-title">Services that move the needle</h2>
+      <p class="sub">Concrete deliverables. Clear SLAs. Measurable impact.</p>
+
+      <div class="grid">
+        <article class="card service shadow">
+          <div class="icon" aria-hidden="true">⚙️</div>
+          <h3>Cloud Architecture &amp; Migrations</h3>
+          <p class="muted">Landing zones, IaC (Terraform/Bicep), network topologies, and zero-downtime migrations to Azure/AWS.</p>
+          <ul class="muted" style="margin:10px 0 0; padding-left:18px">
+            <li>Security guardrails baked in</li>
+            <li>Cost visibility from day one</li>
+          </ul>
+        </article>
+
+        <article class="card service shadow">
+          <div class="icon" aria-hidden="true">🛡️</div>
+          <h3>Security &amp; Compliance</h3>
+          <p class="muted">Threat modeling, identity hardening, and evidence packs for ISO27001, Cyber Essentials, NHS DSPT.</p>
+          <ul class="muted" style="margin:10px 0 0; padding-left:18px">
+            <li>Zero-trust baselines</li>
+            <li>SIEM pipelines &amp; alert hygiene</li>
+          </ul>
+        </article>
+
+        <article class="card service shadow">
+          <div class="icon" aria-hidden="true">🤖</div>
+          <h3>Automation &amp; SRE</h3>
+          <p class="muted">CI/CD, policy as code, golden images, self-healing runbooks, and DORA metrics your CFO won’t hate.</p>
+          <ul class="muted" style="margin:10px 0 0; padding-left:18px">
+            <li>Incident reduction playbooks</li>
+            <li>Meaningful observability</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section class="section" id="approach" aria-labelledby="approach-title">
+    <div class="container">
+      <h2 id="approach-title">Our approach</h2>
+      <p class="sub">Short loops. No surprises. Documented handover.</p>
+      <div class="grid">
+        <div class="card shadow" style="grid-column: span 12">
+          <ol style="margin:0;padding-left:18px;display:grid;gap:10px" class="muted">
+            <li><strong>Discover:</strong> map value streams, risk hot-spots, and quick wins.</li>
+            <li><strong>Design:</strong> reference architectures, RACI, and rollout plan with success metrics.</li>
+            <li><strong>Deliver:</strong> weekly increments, no-surprise demos, and a hardening pass.</li>
+            <li><strong>Enable:</strong> docs, handover, and enablement workshops so you’re not dependent on us.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clients -->
+  <section class="section" id="clients" aria-labelledby="clients-title">
+    <div class="container">
+      <h2 id="clients-title">Trusted by teams like yours</h2>
+      <p class="sub">Logos are placeholders—swap for your own.</p>
+      <div class="logos" style="margin-top:12px">
+        <div class="logo-tile">Acme</div>
+        <div class="logo-tile">Helix</div>
+        <div class="logo-tile">Nimbus</div>
+        <div class="logo-tile">Vertex</div>
+        <div class="logo-tile">Pulse</div>
+        <div class="logo-tile">Novus</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials (slider) -->
+  <section class="section" aria-labelledby="testimonials-title">
+    <div class="container">
+      <h2 id="testimonials-title">What clients say</h2>
+      <p class="sub">Social proof without the fluff.</p>
+
+      <div class="card shadow slider" id="slider" aria-roledescription="carousel" aria-label="Testimonials">
+        <div class="slides" id="slides">
+          <figure class="slide" aria-roledescription="slide" aria-label="1 of 3">
+            <blockquote class="quote">“VectorLabs cut our cloud bill by 23% while improving reliability. They shipped value in week one.”</blockquote>
+            <figcaption class="muted" style="margin-top:8px">— CTO, Healthcare SaaS</figcaption>
+          </figure>
+          <figure class="slide" aria-roledescription="slide" aria-label="2 of 3">
+            <blockquote class="quote">“The handover was immaculate. Our team can run the platform without hand-holding.”</blockquote>
+            <figcaption class="muted" style="margin-top:8px">— Head of Engineering, Fintech</figcaption>
+          </figure>
+          <figure class="slide" aria-roledescription="slide" aria-label="3 of 3">
+            <blockquote class="quote">“Finally a partner that talks risks, not fairy tales—and actually mitigates them.”</blockquote>
+            <figcaption class="muted" style="margin-top:8px">— Ops Lead, Logistics</figcaption>
+          </figure>
+        </div>
+        <div class="dots" role="tablist" aria-label="Testimonials pagination">
+          <button class="dot-btn" role="tab" aria-selected="true" aria-controls="slide1" aria-current="true" data-index="0"></button>
+          <button class="dot-btn" role="tab" aria-selected="false" aria-controls="slide2" data-index="1"></button>
+          <button class="dot-btn" role="tab" aria-selected="false" aria-controls="slide3" data-index="2"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" id="contact" aria-labelledby="contact-title">
+    <div class="container">
+      <div class="cta card shadow">
+        <div>
+          <h2 id="contact-title" style="margin:0 0 6px">Ready to reduce incidents and speed up delivery?</h2>
+          <p class="sub">Tell us where it hurts. We’ll map a 90-day plan you can start tomorrow.</p>
+          <form onsubmit="event.preventDefault(); alert('Thanks — we’ll be in touch within 1 business day.');" style="display:grid;grid-template-columns:1fr 1fr 160px;gap:10px">
+            <label class="sr-only" for="name">Name</label>
+            <input id="name" class="card" style="height:44px" type="text" placeholder="Ada Lovelace" required />
+            <label class="sr-only" for="email">Email</label>
+            <input id="email" class="card" style="height:44px" type="email" placeholder="you@company.com" required />
+            <button class="btn" type="submit">Get the plan</button>
+          </form>
+          <p class="muted" style="margin:8px 0 0">We never share your data. Unsubscribe anytime.</p>
+        </div>
+        <div class="card">
+          <strong>What you’ll get:</strong>
+          <ul class="muted" style="margin:10px 0 0; padding-left:18px; display:grid; gap:6px">
+            <li>Architecture sketch + bill of materials</li>
+            <li>Top 5 risks &amp; mitigations</li>
+            <li>Cost/time estimate with assumptions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq" aria-labelledby="faq-title">
+    <div class="container">
+      <h2 id="faq-title">Frequently asked questions</h2>
+      <p class="sub">Short, honest answers to common questions.</p>
+
+      <details>
+        <summary>How fast can we start?</summary>
+        <p class="muted">Discovery call this week, proposal within 3 working days, first delivery in 10–14 days.</p>
+      </details>
+      <details>
+        <summary>Do you work fixed-price or time &amp; materials?</summary>
+        <p class="muted">Both. We prefer fixed outcomes with a clear definition of done and sensible change control.</p>
+      </details>
+      <details>
+        <summary>Will we be dependent on you afterwards?</summary>
+        <p class="muted">No. We deliver docs, runbooks, and enablement so your team can operate solo.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container foot">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <span>VectorLabs</span>
+      </div>
+      <div class="small">© <span id="y"></span> VectorLabs Ltd. All rights reserved.</div>
+      <div class="small"><a href="#">Privacy</a> · <a href="#">Terms</a></div>
+    </div>
+  </footer>
+
+  <!-- Mobile Sticky CTA -->
+  <a class="btn fab" href="#contact" aria-label="Book a Call">Book a Call</a>
+
+  <script>
+    // Mobile drawer
+    const btn = document.getElementById('menuBtn');
+    const drawer = document.getElementById('drawer');
+    btn?.addEventListener('click', () => {
+      const isHidden = drawer.hasAttribute('hidden');
+      drawer.toggleAttribute('hidden', !isHidden);
+      btn.setAttribute('aria-expanded', String(isHidden));
+    });
+
+    // Theme toggle with persistence
+    const themeBtn = document.getElementById('themeBtn');
+    const root = document.documentElement;
+    function setTheme(mode){
+      root.setAttribute('data-theme', mode);
+      localStorage.setItem('theme', mode);
+      themeBtn?.setAttribute('aria-pressed', mode === 'dark');
+      themeBtn.title = `Theme: ${mode}`;
+    }
+    const saved = localStorage.getItem('theme');
+    if(saved){ setTheme(saved); }
+    themeBtn?.addEventListener('click', ()=>{
+      const current = root.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      setTheme(next);
+    });
+
+    // Testimonial slider (accessible + auto-advance)
+    const slides = document.getElementById('slides');
+    const dots = Array.from(document.querySelectorAll('.dot-btn'));
+    let idx = 0, auto = null;
+    function go(i){
+      idx = (i + dots.length) % dots.length;
+      slides.style.transform = `translateX(-${idx * 100}%)`;
+      dots.forEach((d, n)=>{
+        d.setAttribute('aria-selected', n===idx);
+        d.toggleAttribute('aria-current', n===idx);
+      });
+    }
+    dots.forEach(d => d.addEventListener('click', (e)=> go(parseInt(e.currentTarget.dataset.index))));
+    function start(){ auto = setInterval(()=> go(idx+1), 6000); }
+    function stop(){ clearInterval(auto); }
+    document.getElementById('slider')?.addEventListener('mouseenter', stop);
+    document.getElementById('slider')?.addEventListener('mouseleave', start);
+    start();
+
+    // Current year
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
